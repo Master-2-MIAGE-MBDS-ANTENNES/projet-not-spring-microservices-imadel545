@@ -64,3 +64,25 @@ Dans cette étape, le `TaskService` a été connecté au `UserService` à l’ai
 - Tests réalisés :
   - Création d’un utilisateur via `UserService` (`POST /api/users` sur le port 8080).
   - Création d’une tâche via `TaskService` (`POST /api/tasks` sur le port 8081) en fournissant les `userIds` et validation de l’appel Feign.
+
+## Étape 6 : Mise en Place d’une Gateway Dynamique
+
+Création du microservice gatewayservice (Spring Cloud Gateway) sur le port 8080
+
+Configuration des routes dynamiques via Eureka
+
+Activation du routage dynamique basé sur les noms des services
+
+Accès aux services via la Gateway
+
+## Étape 7 : Mise en place d’une API Gateway dynamique
+- Création du projet `apigateway` (Spring Cloud Gateway).
+- Configuration de l’enregistrement Eureka.
+- Routes dynamiques :
+  - `/userservice/**` → `USERSERVICE`
+  - `/taskservice/**` → `TASKSERVICE`
+- Tests réalisés :
+  - `curl http://localhost:8082/userservice/api/users`
+  - `curl http://localhost:8082/taskservice/api/tasks`
+
+_Synchro test Imad_
