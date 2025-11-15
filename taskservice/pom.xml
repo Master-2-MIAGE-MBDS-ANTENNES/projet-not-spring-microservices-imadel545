@@ -20,12 +20,12 @@
 
     <properties>
         <java.version>17</java.version>
-        <!-- Pour Spring Cloud / Feign -->
+        <!-- Version Spring Cloud (même que userservice + discoveryserver) -->
         <spring-cloud.version>2023.0.3</spring-cloud.version>
     </properties>
 
     <dependencies>
-        <!-- JPA / H2 / Web / Test standard -->
+        <!-- Persistence JPA + H2 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -42,16 +42,23 @@
             <scope>runtime</scope>
         </dependency>
 
+        <!-- Tests -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
 
-        <!-- 🔗 Feign : communication TaskService -> UserService -->
+        <!-- Feign : TaskService -> UserService -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <!-- Eureka client : enregistrement dans le Discovery Server -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
     </dependencies>
 
