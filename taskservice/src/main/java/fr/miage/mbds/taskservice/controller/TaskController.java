@@ -1,8 +1,8 @@
 package fr.miage.mbds.taskservice.controller;
 
-import fr.miage.mbds.taskservice.entity.Task;
-import fr.miage.mbds.taskservice.entity.TaskStatus;
-import fr.miage.mbds.taskservice.repository.TaskRepository;
+import fr.miage.mbds.taskservice.dto.TaskDTO;
+import fr.miage.mbds.taskservice.dto.TaskResponseDTO;
+import fr.miage.mbds.taskservice.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,32 +11,29 @@ import java.util.List;
 @RequestMapping("/api/tasks")
 public class TaskController {
 
-    private final TaskRepository taskRepository;
+    private final TaskService service;
 
-    public TaskController(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
+    public TaskController(TaskService service) {
+        this.service = service;
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
-        return taskRepository.findAll();
+    public List<TaskResponseDTO> getAll() {
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable Long id) {
-        return taskRepository.findById(id).orElse(null);
+    public TaskResponseDTO getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
     @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        if (task.getStatus() == null) {
-            task.setStatus(TaskStatus.OUVERTE);
-        }
-        return taskRepository.save(task);
+    public TaskResponseDTO create(@RequestBody TaskDTO dto) {
+        return service.create(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTask(@PathVariable Long id) {
-        taskRepository.deleteById(id);
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 }
