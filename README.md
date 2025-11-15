@@ -50,4 +50,17 @@ Pour cette étape, le UserService a été restructuré afin d’adopter une arch
 •POST /api/users → création via UserDTO
 •DELETE /api/users/{id} → suppression
 
+## Étape 5 : Intégration de Feign (TaskService → UserService)
 
+Dans cette étape, le `TaskService` a été connecté au `UserService` à l’aide de Spring Cloud OpenFeign afin de permettre la validation des utilisateurs associés à une tâche.
+
+- Ajout de la dépendance `spring-cloud-starter-openfeign` dans le `pom.xml` du `taskservice`.
+- Activation de Feign via l’annotation `@EnableFeignClients` dans `TaskserviceApplication`.
+- Création d’un client Feign `UserClient` pointant vers le `UserService` (appel sur `/api/users/{id}`).
+- Évolution du modèle côté `TaskService` pour gérer une liste d’utilisateurs associés à une tâche (liste d’identifiants dans le DTO).
+- Adaptation de la couche service (`TaskService` / `TaskServiceImpl`) pour :
+  - Vérifier l’existence des utilisateurs via le client Feign avant création de la tâche.
+  - Exposer les informations via les DTO (`TaskDTO` / `TaskResponseDTO`).
+- Tests réalisés :
+  - Création d’un utilisateur via `UserService` (`POST /api/users` sur le port 8080).
+  - Création d’une tâche via `TaskService` (`POST /api/tasks` sur le port 8081) en fournissant les `userIds` et validation de l’appel Feign.
