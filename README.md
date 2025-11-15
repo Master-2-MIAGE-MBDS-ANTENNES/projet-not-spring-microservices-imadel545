@@ -2,7 +2,6 @@
 
 ## Étape 1 : UserService – CRUD Utilisateurs
 
-
 Fonctionnalités développées :
 - Création du microservice `UserService`
 - Mise en place de l'entité `User` (nom, prénom, email)
@@ -31,3 +30,19 @@ Fonctionnalités :
   - GET /api/tasks/{id}
   - DELETE /api/tasks/{id}
 - Base H2 en mémoire (`taskdb`) sur port 8081.
+
+
+## Étape 3 : UserService – DTO, Mapper, Abstraction
+
+- Création des DTO :
+  - `UserDTO` (nom, prénom, email) pour les requêtes d'entrée
+  - `UserResponseDTO` (id, nom, prénom, email) pour les réponses
+- Création du mapper `UserMapper` pour convertir Entity ⇄ DTO
+- Création d'une couche de service :
+  - Interface `UserService`
+  - Implémentation `UserServiceImpl`
+- Mise à jour de `UserController` pour utiliser le service et les DTO :
+  - `GET /api/users` → `List<UserResponseDTO>`
+  - `GET /api/users/{id}` → `UserResponseDTO`
+  - `POST /api/users` → `UserResponseDTO`
+  - `DELETE /api/users/{id}` → `void`

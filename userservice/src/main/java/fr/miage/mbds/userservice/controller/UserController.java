@@ -1,7 +1,8 @@
 package fr.miage.mbds.userservice.controller;
 
-import fr.miage.mbds.userservice.entity.User;
-import fr.miage.mbds.userservice.repository.UserRepository;
+import fr.miage.mbds.userservice.dto.UserDTO;
+import fr.miage.mbds.userservice.dto.UserResponseDTO;
+import fr.miage.mbds.userservice.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,33 +11,29 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService service;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService service) {
+        this.service = service;
     }
 
-    // GET /api/users
     @GetMapping
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserResponseDTO> getAll() {
+        return service.getAll();
     }
 
-    // POST /api/users
-    @PostMapping
-    public User createUser(@RequestBody User user) {
-        return userRepository.save(user);
-    }
-
-    // GET /api/users/{id}
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userRepository.findById(id).orElse(null);
+    public UserResponseDTO getById(@PathVariable Long id) {
+        return service.getById(id);
     }
 
-    // DELETE /api/users/{id}
+    @PostMapping
+    public UserResponseDTO create(@RequestBody UserDTO dto) {
+        return service.create(dto);
+    }
+
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userRepository.deleteById(id);
+    public void delete(@PathVariable Long id) {
+        service.delete(id);
     }
 }
