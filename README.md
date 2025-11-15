@@ -85,4 +85,14 @@ Accès aux services via la Gateway
   - `curl http://localhost:8082/userservice/api/users`
   - `curl http://localhost:8082/taskservice/api/tasks`
 
-_Synchro test Imad_
+## Étape 8 : Ajout de la Résilience avec Resilience4J
+
+Cette étape a introduit des mécanismes de tolérance aux pannes afin de sécuriser les appels réseau entre le TaskService et le UserService. L’objectif était d’éviter qu’une panne du UserService bloque le fonctionnement global de l’application.
+
+Fonctionnalités intégrées :
+•	Ajout des dépendances Resilience4J (circuitbreaker, retry, spring-boot3) dans le pom.xml du taskservice.
+•	Activation d’AOP et de Feign CircuitBreaker pour permettre l’utilisation des annotations.
+•	Configuration complète dans application.properties :
+•	CircuitBreaker (userService)
+•	Retry (userService)
+•	Exposition Actuator (/actuator/circuitbreakers)
